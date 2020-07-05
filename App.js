@@ -1,9 +1,10 @@
 import React from 'react';
 
 import Home from './screen/Home';
+import Routes from './routes';
 
 const App = () => {
-  return <Home />;
+  return <Routes />;
 };
 
 export default App;
