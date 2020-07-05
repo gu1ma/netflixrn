@@ -36,7 +36,7 @@ let iconsAvailables = [
 const ChooseIcon = (props) => {
   useEffect(() => {
     props.navigation.setOptions({
-      title: 'Choose your Avatar',
+      title: 'Selecione um avatar',
       headerTitleAlign: 'center',
       headerTitleStyle: {
         fontSize: 16,
@@ -51,9 +51,9 @@ const ChooseIcon = (props) => {
 
   return (
     <Screen>
-      <Label>Classic</Label>
+      <Label>Clássicos</Label>
       <View style={{height: 80}}>
-        <Row horizontal>
+        <Row horizontal showsHorizontalScrollIndicator={false}>
           {iconsAvailables.map((item, index) => (
             <Avatar
               key={index}
@@ -69,9 +69,9 @@ const ChooseIcon = (props) => {
           ))}
         </Row>
       </View>
-      <Label>Create your avatar</Label>
+      <Label>Crie o seu avatar</Label>
       <Button
-        color="#1a1718"
+        color="#fff"
         title="CAMERA"
         onPress={() => {
           props.navigation.navigate('Camera', {

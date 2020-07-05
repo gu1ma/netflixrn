@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components/native';
 import Avatar from '../components/Avatar';
-import {View} from 'react-native';
 import {MaterialIcons} from '@expo/vector-icons';
 
 const Screen = styled.View`
@@ -93,6 +92,12 @@ const editProfile = (navigation, profiles) => {
 
 const More = (props) => {
   replaceAvatarsWithImage(props, profilesAvailables);
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerShown: false
+    });
+  }, []);
 
   return (
     <Screen>

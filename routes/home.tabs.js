@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //pages
-import Home from './screen/Home';
-import More from './screen/More';
-import ProfileToEdit from './screen/ProfileToEdit';
+import Home from '../screen/Home';
+
+//nested routes
+import MoreRoutes from './more.stack';
 
 //icons
 import IconsFA5 from 'react-native-vector-icons/FontAwesome5';
 import IconsFeather from 'react-native-vector-icons/Feather';
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function OpaRoutes() {
+export default function HomeRoutes() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -82,10 +81,7 @@ export default function OpaRoutes() {
           name="Mais" 
           component={() => (
             <>
-              <Stack.Navigator>
-                <Stack.Screen name="More" component={More} />
-                <Stack.Screen name="ProfileToEdit" component={ProfileToEdit} />
-              </Stack.Navigator>
+              <MoreRoutes />
             </>
           )} 
           options={{

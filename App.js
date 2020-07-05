@@ -1,7 +1,5 @@
 import React from 'react';
-
-import Home from './screen/Home';
-import Routes from './routes';
+import Routes from './routes/home.tabs';
 
 const App = () => {
   return <Routes />;
