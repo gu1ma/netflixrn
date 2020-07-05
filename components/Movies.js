@@ -45,7 +45,7 @@ const Movies = ({label, item}) => {
   return (
     <Container>
       <Label>{label}</Label>
-      <MovieScroll horizontal>
+      <MovieScroll horizontal showsHorizontalScrollIndicator={false}>
         {item.map((movie, index) => {
           return (
             <MovieCard key={String(index)}>

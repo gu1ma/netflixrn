@@ -39,7 +39,7 @@ const Home = () => {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <Container>
+      <Container showsVerticalScrollIndicator={false}>
         <Poster source={require('../assets/poster.jpg')}>
           <Gradient
             locations={[0, 0.2, 0.6, 0.93]}
