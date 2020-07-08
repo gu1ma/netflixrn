@@ -71,7 +71,7 @@ const ChooseIcon = (props) => {
       </View>
       <Label>Crie o seu avatar</Label>
       <Button
-        color="#fff"
+        color="#000"
         title="CAMERA"
         onPress={() => {
           props.navigation.navigate('Camera', {
