@@ -11,7 +11,7 @@ const Screen = styled.View`
 `;
 
 const GoBackButton = styled.Button`
-  background-color: black;
+  background: black;
   font-size: 10px;
   font-weight: bold;
 `;
@@ -47,7 +47,7 @@ const ProfileToEdit = (props) => {
         <GoBackButton
           onPress={() => props.navigation.goBack()}
           title="Concluído"
-          color="white"
+          color="black"
         />
       ),
     });
