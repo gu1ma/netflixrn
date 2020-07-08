@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //pages
 import Home from '../screen/Home';
+import Jocker from '../screen/Jocker';
 
 //nested routes
 import MoreRoutes from './more.stack';
@@ -40,7 +41,7 @@ export default function HomeRoutes() {
         />
         <Tab.Screen 
           name="Busca" 
-          component={Home} 
+          component={() => <Jocker page="Busca" />} 
           options={{
             title: 'Busca',
             color: '#fff',
@@ -53,7 +54,7 @@ export default function HomeRoutes() {
         />
         <Tab.Screen 
           name="Em breve" 
-          component={Home} 
+          component={() => <Jocker page="Em breve" />}  
           options={{
             title: 'Em breve',
             color: '#fff',
@@ -66,7 +67,7 @@ export default function HomeRoutes() {
         />
         <Tab.Screen 
           name="Downloads" 
-          component={Home} 
+          component={() => <Jocker page="Downloads" />} 
           options={{
             title: 'Downloads',
             color: '#fff',
