@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {StatusBar, Dimensions} from 'react-native';
 
@@ -9,6 +9,7 @@ import styled from 'styled-components/native';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Movies from '../components/Movies';
+import { ProfileContext } from '../context/ProfileContext';
 
 const api = [
   require('../assets/movies/movie1.jpg'),
@@ -39,23 +40,27 @@ const Home = () => {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <Container showsVerticalScrollIndicator={false}>
-        <Poster source={require('../assets/poster.jpg')}>
-          <Gradient
-            locations={[0, 0.2, 0.6, 0.93]}
-            colors={[
-              'rgba(0,0,0,0.5)',
-              'rgba(0,0,0,0.0)',
-              'rgba(0,0,0,0.0)',
-              'rgba(0,0,0,1)',
-            ]}>
-            <Header />
-            <Hero />
-          </Gradient>
-        </Poster>
-        <Movies label="Recomendados" item={api} />
-        <Movies label="Top 10" item={api} />
-      </Container>
+      
+        <Container showsVerticalScrollIndicator={false}>
+          <Poster source={require('../assets/poster.jpg')}>
+            <Gradient
+              locations={[0, 0.2, 0.6, 0.93]}
+              colors={[
+                'rgba(0,0,0,0.5)',
+                'rgba(0,0,0,0.0)',
+                'rgba(0,0,0,0.0)',
+                'rgba(0,0,0,1)',
+              ]}>
+              <Header />
+              <Hero />
+            </Gradient>
+          </Poster>
+          <ProfileContext.Consumer>
+            {({user}) => user && <Movies label={`continuar assistindo como: ${user}`} item={api} /> }
+            </ProfileContext.Consumer>
+          <Movies label="Recomendados" item={api} />
+          <Movies label="Top 10" item={api} />
+        </Container>
     </>
   );
 };

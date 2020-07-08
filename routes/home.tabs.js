@@ -28,7 +28,7 @@ export default function HomeRoutes() {
       >
         <Tab.Screen 
           name="Home" 
-          component={Home} 
+          component={() => <Home />} 
           options={{
             title: 'Home',
             color: '#fff',
