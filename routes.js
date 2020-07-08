@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './screen/Home';
 import More from './screen/More';
 import ProfileToEdit from './screen/ProfileToEdit';
+import Camera from './screen/Camera';
 
 //icons
 import IconsFA5 from 'react-native-vector-icons/FontAwesome5';
@@ -85,6 +86,7 @@ export default function OpaRoutes() {
               <Stack.Navigator>
                 <Stack.Screen name="More" component={More} />
                 <Stack.Screen name="ProfileToEdit" component={ProfileToEdit} />
+                <Stack.Screen name="Camera" component={Camera} />
               </Stack.Navigator>
             </>
           )} 
