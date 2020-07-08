@@ -33,6 +33,12 @@ const Gradient = styled(LinearGradient)`
 `;
 
 const Home = () => {
+  function getMoviesToResume(user) {
+    const moviesJson = require('../assets/moviesToResume.json')
+    console.log('user list', moviesJson[user])
+    return moviesJson[user]
+  }
+  
   return (
     <>
       <StatusBar
@@ -56,7 +62,7 @@ const Home = () => {
             </Gradient>
           </Poster>
           <ProfileContext.Consumer>
-            {({user}) => user && <Movies label={`continuar assistindo como: ${user}`} item={api} /> }
+            {({user}) => user && <Movies label={`continuar assistindo como: ${user}`} item={getMoviesToResume(user)} /> }
             </ProfileContext.Consumer>
           <Movies label="Recomendados" item={api} />
           <Movies label="Top 10" item={api} />
