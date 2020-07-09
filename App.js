@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import Routes from './routes/home.tabs';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, Alert} from 'react-native';
 
 import { ProfileContext } from './context/ProfileContext'
+
+import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
 
@@ -12,11 +14,14 @@ const App = () => {
     AsyncStorage.getItem('profile').then(result => {
       setUser(result)
     });
-  }, [])
 
-  useEffect(() => {
-    console.log('user', user)
-  }, [user])
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      const { notification } = remoteMessage;
+      Alert.alert(notification.title, notification.body);
+    });
+
+    return unsubscribe;
+  }, [])
 
   return (
     <ProfileContext.Provider value={{user, changeProfile: setUser}}>
