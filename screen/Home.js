@@ -6,8 +6,6 @@ import {LinearGradient} from 'expo-linear-gradient';
 
 import styled from 'styled-components/native';
 
-import Geolocation from '@react-native-community/geolocation';
-
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Movies from '../components/Movies';
@@ -41,32 +39,16 @@ const Home = () => {
   }
 
   useEffect(() => {
-    async function requestLocationPermission() {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            'title': 'Location Permission',
-            'message': 'This App needs access to your location ' +
-                       'so we can know where you are.'
-          }
-        )
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          //console.log("You can use locations ")
-        } else {
-          //console.log("Location permission denied")
-        }
-      } catch (err) {
-        //console.warn('loc', err)
-      }
-    }
-
+    
     async function getNationalMovies() {
-      const geolocation = await getLocation()
-      const nationalMovies = await filtrateNationalMovies(movies, geolocation)
+      try {
+        const geolocation = await getLocation()
+        const nationalMovies = await filtrateNationalMovies(movies, geolocation)
 
-      console.log('nat', nationalMovies)
-      setNationalMovies(nationalMovies)
+        setNationalMovies(nationalMovies)
+      } catch(e) {
+        //console.log('e', e.message)
+      }
     }
 
     async function getForeignMovies() {
@@ -76,11 +58,10 @@ const Home = () => {
         
         setForeignMovies(foreignMovies)
       } catch (e) {
-          //console.log('e', e.message)
+        //console.log('e', e.message)
       }
     }
 
-    requestLocationPermission()
     getNationalMovies()
     getForeignMovies()
   }, [])

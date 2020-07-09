@@ -8,7 +8,6 @@ export const getLocation = async () => {
         }
 
         Geolocation.getCurrentPosition(onReceiveLocation, error => {
-            console.log(error)
             reject()
         })
     })
@@ -21,9 +20,6 @@ export const filtrateNationalMovies = async (movies, geolocation) => {
         lng: geolocation.coords.longitude,
     })
     const country = location[0].country
-
-    console.log('country', country)
-
     const nationalMovies = movies.filter(item => (item.Country.indexOf(country) !== -1))
 
     return nationalMovies
