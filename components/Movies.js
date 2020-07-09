@@ -42,6 +42,8 @@ const Movies = ({label, item}) => {
     },
   });
 
+  //console.log('item', item)
+
   return (
     <Container>
       <Label>{label}</Label>

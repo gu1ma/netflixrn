@@ -1,22 +1,19 @@
 import React, {useState, useEffect} from 'react';
 
-import {StatusBar, Dimensions} from 'react-native';
+import {StatusBar, Dimensions, PermissionsAndroid} from 'react-native';
 
 import {LinearGradient} from 'expo-linear-gradient';
 
 import styled from 'styled-components/native';
+
+import Geolocation from '@react-native-community/geolocation';
 
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Movies from '../components/Movies';
 import { ProfileContext } from '../context/ProfileContext';
 
-const api = [
-  require('../assets/movies/movie1.jpg'),
-  require('../assets/movies/movie2.jpg'),
-  require('../assets/movies/movie3.jpg'),
-  require('../assets/movies/movie4.jpg'),
-];
+import { getLocation, filtrateForeignMovies, filtrateNationalMovies } from '../services/filterMovies';
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -33,11 +30,60 @@ const Gradient = styled(LinearGradient)`
 `;
 
 const Home = () => {
+  const [nationalMovies, setNationalMovies] = useState([])
+  const [foreignMovies, setForeignMovies] = useState([])
+
+  const movies = require('../assets/Movies.json')
+
   function getMoviesToResume(user) {
     const moviesJson = require('../assets/moviesToResume.json')
-    console.log('user list', moviesJson[user])
     return moviesJson[user]
   }
+
+  useEffect(() => {
+    async function requestLocationPermission() {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            'title': 'Location Permission',
+            'message': 'This App needs access to your location ' +
+                       'so we can know where you are.'
+          }
+        )
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          //console.log("You can use locations ")
+        } else {
+          //console.log("Location permission denied")
+        }
+      } catch (err) {
+        //console.warn('loc', err)
+      }
+    }
+
+    async function getNationalMovies() {
+      const geolocation = await getLocation()
+      const nationalMovies = await filtrateNationalMovies(movies, geolocation)
+
+      console.log('nat', nationalMovies)
+      setNationalMovies(nationalMovies)
+    }
+
+    async function getForeignMovies() {
+      try {
+        const geolocation = await getLocation()
+        const foreignMovies = await filtrateForeignMovies(movies, geolocation)
+        
+        setForeignMovies(foreignMovies)
+      } catch (e) {
+          //console.log('e', e.message)
+      }
+    }
+
+    requestLocationPermission()
+    getNationalMovies()
+    getForeignMovies()
+  }, [])
   
   return (
     <>
@@ -46,7 +92,6 @@ const Home = () => {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      
         <Container showsVerticalScrollIndicator={false}>
           <Poster source={require('../assets/poster.jpg')}>
             <Gradient
@@ -62,10 +107,10 @@ const Home = () => {
             </Gradient>
           </Poster>
           <ProfileContext.Consumer>
-            {({user}) => user && <Movies label={`continuar assistindo como: ${user}`} item={getMoviesToResume(user)} /> }
-            </ProfileContext.Consumer>
-          <Movies label="Recomendados" item={api} />
-          <Movies label="Top 10" item={api} />
+            {({user}) => user && <Movies label={`Continuar assistindo como: ${user}`} item={getMoviesToResume(user)} /> }
+          </ProfileContext.Consumer>
+          <Movies label="Recomendados" item={foreignMovies} />
+          <Movies label="Nacionais" item={nationalMovies} />
         </Container>
     </>
   );
